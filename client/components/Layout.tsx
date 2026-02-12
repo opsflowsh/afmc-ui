@@ -9,22 +9,20 @@ export default function Layout({ children }: LayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-orange-200/50 shadow-sm">
+      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-yellow-200/50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            {/* Logo */}
-            <Link to="/" className="flex items-center gap-2 group">
-              <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-400 to-orange-600 rounded-lg blur opacity-50 group-hover:opacity-75 transition-opacity" />
-                <div className="relative bg-white px-3 py-1 rounded-lg">
-                  <span className="text-2xl font-black bg-gradient-to-r from-orange-600 to-orange-500 bg-clip-text text-transparent">
-                    AFMC
-                  </span>
-                </div>
+            {/* Logo with Lobsterian Mascot */}
+            <Link to="/" className="flex items-center gap-3 group">
+              {/* Mascot Icon */}
+              <div className="text-4xl group-hover:scale-110 transition-transform duration-300">
+                🦞
               </div>
               <div className="hidden sm:block">
-                <h1 className="text-sm font-bold text-gray-900">Agent Fleet</h1>
-                <p className="text-xs text-orange-600">Control Center</p>
+                <h1 className="text-sm font-black bg-gradient-to-r from-yellow-600 via-amber-600 to-red-600 bg-clip-text text-transparent">
+                  Agent Fleet
+                </h1>
+                <p className="text-xs text-cyan-600 font-semibold">Control Center</p>
               </div>
             </Link>
 
@@ -32,26 +30,26 @@ export default function Layout({ children }: LayoutProps) {
             <nav className="hidden md:flex items-center gap-8">
               <a
                 href="#build-room"
-                className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-yellow-600 transition-colors"
               >
                 Build Room
               </a>
               <a
                 href="#activity"
-                className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-cyan-600 transition-colors"
               >
                 Activity
               </a>
               <a
                 href="#features"
-                className="text-sm font-medium text-gray-700 hover:text-orange-600 transition-colors"
+                className="text-sm font-medium text-gray-700 hover:text-purple-600 transition-colors"
               >
                 Features
               </a>
             </nav>
 
             {/* CTA Button */}
-            <button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-semibold py-2 px-6 rounded-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
+            <button className="bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-semibold py-2 px-6 rounded-lg transition-all transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl">
               Join Us
             </button>
           </div>

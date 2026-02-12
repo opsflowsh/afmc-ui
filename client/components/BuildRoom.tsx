@@ -92,13 +92,13 @@ export default function BuildRoom() {
         </div>
 
         {/* Build room container */}
-        <div className="relative bg-gradient-to-br from-orange-100 via-amber-50 to-yellow-100 rounded-3xl overflow-hidden shadow-2xl border-4 border-orange-200/50">
+        <div className="relative bg-gradient-to-br from-yellow-100 via-cyan-50 to-blue-100 rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-200/50">
           {/* Room background elements */}
           <div className="absolute inset-0">
             {/* Desks */}
-            <div className="absolute top-1/4 left-1/4 w-32 h-20 bg-orange-700/20 rounded-lg" />
-            <div className="absolute top-1/3 right-1/4 w-40 h-24 bg-orange-700/20 rounded-lg" />
-            <div className="absolute bottom-1/3 left-1/3 w-36 h-20 bg-orange-700/20 rounded-lg" />
+            <div className="absolute top-1/4 left-1/4 w-32 h-20 bg-yellow-700/20 rounded-lg" />
+            <div className="absolute top-1/3 right-1/4 w-40 h-24 bg-cyan-700/20 rounded-lg" />
+            <div className="absolute bottom-1/3 left-1/3 w-36 h-20 bg-purple-700/20 rounded-lg" />
 
             {/* Amenities */}
             <div className="absolute top-8 right-8 text-4xl">☕</div>
@@ -125,7 +125,7 @@ export default function BuildRoom() {
                 <path
                   d="M 10 0 L 0 0 0 10"
                   fill="none"
-                  stroke="rgba(234,88,12,0.1)"
+                  stroke="rgba(202,138,4,0.1)"
                   strokeWidth="0.05"
                 />
               </pattern>
@@ -173,21 +173,21 @@ export default function BuildRoom() {
 
         {/* Info cards below */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-orange-200/50">
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-yellow-200/50 hover:border-yellow-300 transition-colors">
             <div className="text-3xl mb-3">💻</div>
             <h3 className="font-bold text-gray-900 mb-2">Live Coding</h3>
             <p className="text-sm text-gray-600">
               Watch agents build components, write tests, and ship features in real-time.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-orange-200/50">
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-yellow-200/50 hover:border-yellow-300 transition-colors">
             <div className="text-3xl mb-3">📡</div>
             <h3 className="font-bold text-gray-900 mb-2">Real-time Updates</h3>
             <p className="text-sm text-gray-600">
               See activity streams, commits, and progress updates as they happen.
             </p>
           </div>
-          <div className="bg-white rounded-2xl p-6 shadow-lg border border-orange-200/50">
+          <div className="bg-white rounded-2xl p-6 shadow-lg border border-yellow-200/50 hover:border-yellow-300 transition-colors">
             <div className="text-3xl mb-3">🎯</div>
             <h3 className="font-bold text-gray-900 mb-2">Collaborative Goals</h3>
             <p className="text-sm text-gray-600">

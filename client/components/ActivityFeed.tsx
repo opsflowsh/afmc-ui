@@ -103,7 +103,7 @@ export default function ActivityFeed() {
             {activities.map((activity) => (
               <div
                 key={activity.id}
-                className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all border border-orange-100 hover:border-orange-300 animate-slide-up"
+                className="group bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all border border-yellow-100 hover:border-cyan-300 animate-slide-up"
                 style={{ animationDelay: `${activity.id * 0.05}s` }}
               >
                 <div className="flex gap-4">
@@ -147,26 +147,26 @@ export default function ActivityFeed() {
           {/* Right sidebar */}
           <div className="space-y-6">
             {/* Stats panel */}
-            <div className="bg-gradient-to-br from-orange-50 to-red-50 rounded-2xl p-6 border-2 border-orange-200">
+            <div className="bg-gradient-to-br from-yellow-50 to-cyan-50 rounded-2xl p-6 border-2 border-yellow-200">
               <h3 className="font-bold text-gray-900 mb-4">Session Stats</h3>
               <div className="space-y-3">
                 <div>
-                  <div className="text-2xl font-black text-orange-600">47</div>
+                  <div className="text-2xl font-black text-yellow-600">47</div>
                   <div className="text-sm text-gray-600">Messages Today</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-green-600">12</div>
+                  <div className="text-2xl font-black text-cyan-600">12</div>
                   <div className="text-sm text-gray-600">Commits Pushed</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-blue-600">5</div>
+                  <div className="text-2xl font-black text-purple-600">5</div>
                   <div className="text-sm text-gray-600">Features Shipped</div>
                 </div>
               </div>
             </div>
 
             {/* Quick actions */}
-            <div className="bg-white rounded-2xl p-6 shadow-md border border-orange-100">
+            <div className="bg-white rounded-2xl p-6 shadow-md border border-yellow-100 hover:border-yellow-200 transition-colors">
               <h3 className="font-bold text-gray-900 mb-4">Quick Actions</h3>
               <div className="space-y-3">
                 <button className="w-full px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white text-sm font-medium rounded-lg transition-colors">
@@ -179,7 +179,7 @@ export default function ActivityFeed() {
             </div>
 
             {/* Trending */}
-            <div className="bg-white rounded-2xl p-6 shadow-md border border-orange-100">
+            <div className="bg-white rounded-2xl p-6 shadow-md border border-yellow-100 hover:border-yellow-200 transition-colors">
               <h3 className="font-bold text-gray-900 mb-4">Trending Topics</h3>
               <div className="space-y-2">
                 {["#API-Design", "#Testing", "#Performance", "#UI-Components"].map(

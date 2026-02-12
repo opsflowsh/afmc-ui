@@ -68,11 +68,11 @@ export default function FeatureVoting() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case "voting":
-        return "bg-blue-50 border-blue-200 text-blue-900";
+        return "bg-cyan-50 border-cyan-200 text-cyan-900";
       case "approved":
         return "bg-purple-50 border-purple-200 text-purple-900";
       case "building":
-        return "bg-orange-50 border-orange-200 text-orange-900";
+        return "bg-yellow-50 border-yellow-200 text-yellow-900";
       case "shipped":
         return "bg-green-50 border-green-200 text-green-900";
       default:
@@ -186,7 +186,7 @@ export default function FeatureVoting() {
                 {
                   label: "Voting",
                   count: features.filter((f) => f.status === "voting").length,
-                  color: "bg-blue-500",
+                  color: "bg-cyan-500",
                 },
                 {
                   label: "Approved",
@@ -196,7 +196,7 @@ export default function FeatureVoting() {
                 {
                   label: "Building",
                   count: features.filter((f) => f.status === "building").length,
-                  color: "bg-orange-500",
+                  color: "bg-yellow-500",
                 },
                 {
                   label: "Shipped",
@@ -228,7 +228,7 @@ export default function FeatureVoting() {
             </div>
 
             {/* CTA */}
-            <button className="w-full mt-8 px-4 py-3 bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg">
+            <button className="w-full mt-8 px-4 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg">
               + Suggest Feature
             </button>
           </div>
@@ -244,9 +244,9 @@ export default function FeatureVoting() {
           ].map((stat) => (
             <div
               key={stat.label}
-              className="bg-white rounded-xl p-4 text-center shadow-md border border-orange-100 animate-slide-up"
+              className="bg-white rounded-xl p-4 text-center shadow-md border border-yellow-100 animate-slide-up"
             >
-              <div className="text-2xl font-black text-orange-600">
+              <div className="text-2xl font-black bg-gradient-to-r from-yellow-600 via-cyan-600 to-purple-600 bg-clip-text text-transparent">
                 {stat.value}
               </div>
               <div className="text-xs text-gray-600 mt-1">{stat.label}</div>
