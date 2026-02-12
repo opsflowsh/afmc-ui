@@ -1,8 +1,9 @@
 import { MessageCircle, GitCommit, CheckCircle2, Zap } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface ActivityItem {
   id: number;
-  type: "message" | "commit" | "completed" | "milestone";
+  type: "message" | "commit" | "completed" | "milestone" | "approved";
   author: string;
   emoji: string;
   content: string;
@@ -10,7 +11,7 @@ interface ActivityItem {
   likes?: number;
 }
 
-const activities: ActivityItem[] = [
+const defaultActivities: ActivityItem[] = [
   {
     id: 1,
     type: "message",
@@ -77,12 +78,65 @@ function getActivityIcon(type: string) {
       return <CheckCircle2 className="w-5 h-5 text-emerald-500" />;
     case "milestone":
       return <Zap className="w-5 h-5 text-yellow-500" />;
+    case "approved":
+      return <CheckCircle2 className="w-5 h-5 text-purple-500" />;
     default:
       return null;
   }
 }
 
+interface SessionStats {
+  messagesToday: number;
+  commitsPushed: number;
+  featuresShipped: number;
+}
+
 export default function ActivityFeed() {
+  const [activities, setActivities] = useState<ActivityItem[]>(defaultActivities);
+  const [stats, setStats] = useState<SessionStats>({
+    messagesToday: 47,
+    commitsPushed: 12,
+    featuresShipped: 5,
+  });
+
+  // Fetch activities and poll for updates
+  useEffect(() => {
+    // Initial fetch
+    const fetchActivities = async () => {
+      try {
+        const response = await fetch("/api/activity");
+        if (response.ok) {
+          const data = await response.json();
+          setActivities(data);
+        }
+      } catch (error) {
+        console.log("Using default activities");
+      }
+    };
+
+    fetchActivities();
+
+    // Poll for live updates every 30 seconds
+    const pollInterval = setInterval(async () => {
+      try {
+        const response = await fetch("/api/live");
+        if (response.ok) {
+          const data = await response.json();
+          if (data.sessionStats) {
+            setStats(data.sessionStats);
+          }
+          if (data.activities) {
+            setActivities(data.activities);
+          }
+        }
+      } catch (error) {
+        console.log("Live update polling failed");
+      }
+    }, 30000);
+
+    return () => clearInterval(pollInterval);
+  }, []);
+
   return (
     <section id="activity" className="py-20 sm:py-32">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -115,7 +169,7 @@ export default function ActivityFeed() {
                   {/* Content */}
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
-                      <h3 className="font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
+                      <h3 className="font-bold text-gray-900 group-hover:text-yellow-600 transition-colors">
                         {activity.author}
                       </h3>
                       <span className="text-xs text-gray-500">
@@ -126,7 +180,7 @@ export default function ActivityFeed() {
 
                     {/* Engagement */}
                     <div className="flex items-center gap-4">
-                      <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-orange-600 transition-colors group/like">
+                      <button className="flex items-center gap-1 text-sm text-gray-500 hover:text-yellow-600 transition-colors group/like">
                         <div className="text-lg group-hover/like:scale-125 transition-transform">
                           👍
                         </div>
@@ -134,7 +188,7 @@ export default function ActivityFeed() {
                           {activity.likes}
                         </span>
                       </button>
-                      <button className="text-sm text-gray-500 hover:text-blue-600 transition-colors">
+                      <button className="text-sm text-gray-500 hover:text-cyan-600 transition-colors">
                         Reply
                       </button>
                     </div>
@@ -151,15 +205,15 @@ export default function ActivityFeed() {
               <h3 className="font-bold text-gray-900 mb-4">Session Stats</h3>
               <div className="space-y-3">
                 <div>
-                  <div className="text-2xl font-black text-yellow-600">47</div>
+                  <div className="text-2xl font-black text-yellow-600">{stats.messagesToday}</div>
                   <div className="text-sm text-gray-600">Messages Today</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-cyan-600">12</div>
+                  <div className="text-2xl font-black text-cyan-600">{stats.commitsPushed}</div>
                   <div className="text-sm text-gray-600">Commits Pushed</div>
                 </div>
                 <div>
-                  <div className="text-2xl font-black text-purple-600">5</div>
+                  <div className="text-2xl font-black text-purple-600">{stats.featuresShipped}</div>
                   <div className="text-sm text-gray-600">Features Shipped</div>
                 </div>
               </div>
@@ -182,11 +236,11 @@ export default function ActivityFeed() {
             <div className="bg-white rounded-2xl p-6 shadow-md border border-yellow-100 hover:border-yellow-200 transition-colors">
               <h3 className="font-bold text-gray-900 mb-4">Trending Topics</h3>
               <div className="space-y-2">
-                {["#API-Design", "#Testing", "#Performance", "#UI-Components"].map(
+                {["#AgentFleet", "#OpenSource", "#Hackathon", "#LobsterianLife"].map(
                   (topic) => (
                     <button
                       key={topic}
-                      className="block text-sm text-orange-600 hover:text-orange-700 hover:underline transition-colors"
+                      className="block text-sm text-yellow-600 hover:text-yellow-700 hover:underline transition-colors"
                     >
                       {topic}
                     </button>

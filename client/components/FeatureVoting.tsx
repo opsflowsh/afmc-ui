@@ -1,5 +1,5 @@
 import { ArrowUp, Check, Clock, Zap } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Feature {
   id: number;
@@ -8,6 +8,14 @@ interface Feature {
   votes: number;
   status: "voting" | "approved" | "building" | "shipped";
   eta?: string;
+}
+
+interface Stats {
+  totalVotes: number;
+  featuresShipped: number;
+  communityMembers: number;
+  avgVoteCount: number;
+  githubStars: number;
 }
 
 export default function FeatureVoting() {
@@ -57,12 +65,61 @@ export default function FeatureVoting() {
     },
   ]);
 
-  const handleVote = (featureId: number) => {
-    setFeatures((prev) =>
-      prev.map((f) =>
-        f.id === featureId ? { ...f, votes: f.votes + 1 } : f
-      )
-    );
+  const [stats, setStats] = useState<Stats>({
+    totalVotes: 1200000,
+    featuresShipped: 47,
+    communityMembers: 8400,
+    avgVoteCount: 245,
+    githubStars: 0,
+  });
+
+  // Fetch features and stats
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Fetch features
+        const featuresRes = await fetch("/api/features");
+        if (featuresRes.ok) {
+          const data = await featuresRes.json();
+          setFeatures(data.features);
+        }
+
+        // Fetch stats
+        const statsRes = await fetch("/api/stats");
+        if (statsRes.ok) {
+          const statsData = await statsRes.json();
+          setStats(statsData);
+        }
+      } catch (error) {
+        console.log("Using default features and stats");
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleVote = async (featureId: number) => {
+    try {
+      const res = await fetch(`/api/vote/${featureId}`, { method: "POST" });
+      if (res.ok) {
+        const data = await res.json();
+
+        // Update local state with the response
+        setFeatures((prev) =>
+          prev.map((f) =>
+            f.id === featureId ? { ...f, votes: data.votes } : f
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Vote failed:", error);
+      // Fallback to local increment
+      setFeatures((prev) =>
+        prev.map((f) =>
+          f.id === featureId ? { ...f, votes: f.votes + 1 } : f
+        )
+      );
+    }
   };
 
   const getStatusColor = (status: string) => {
@@ -156,7 +213,7 @@ export default function FeatureVoting() {
                           className={`w-6 h-6 ${
                             feature.status === "shipped"
                               ? "text-gray-400"
-                              : "text-orange-600"
+                              : "text-yellow-600"
                           }`}
                         />
                         <span className="text-sm">{feature.votes}</span>
@@ -167,7 +224,7 @@ export default function FeatureVoting() {
                   {/* Progress bar for building features */}
                   {feature.status === "building" && (
                     <div className="mt-4 h-2 bg-white/50 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-orange-400 to-orange-600 w-2/3 rounded-full" />
+                      <div className="h-full bg-gradient-to-r from-yellow-400 to-yellow-600 w-2/3 rounded-full" />
                     </div>
                   )}
                 </div>
@@ -176,7 +233,7 @@ export default function FeatureVoting() {
           </div>
 
           {/* Pipeline visualization */}
-          <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 border-2 border-gray-200 h-fit sticky top-24">
+          <div className="bg-gradient-to-br from-yellow-50 to-cyan-50 rounded-2xl p-8 border-2 border-yellow-200 h-fit sticky top-24">
             <h3 className="font-bold text-gray-900 mb-6 text-lg">
               Development Pipeline
             </h3>
@@ -228,7 +285,10 @@ export default function FeatureVoting() {
             </div>
 
             {/* CTA */}
-            <button className="w-full mt-8 px-4 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg">
+            <button
+              onClick={() => window.open('https://github.com/opsflowsh/agentfleet/issues/new?template=feature_request.md', '_blank')}
+              className="w-full mt-8 px-4 py-3 bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all transform hover:scale-105 active:scale-95 shadow-lg"
+            >
               + Suggest Feature
             </button>
           </div>
@@ -237,10 +297,10 @@ export default function FeatureVoting() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "Total Votes", value: "1.2M" },
-            { label: "Features Shipped", value: "47" },
-            { label: "Community Members", value: "8.4K" },
-            { label: "Avg Vote Count", value: "245" },
+            { label: "Total Votes", value: (stats.totalVotes / 1000000).toFixed(1) + "M" },
+            { label: "Features Shipped", value: stats.featuresShipped },
+            { label: "Community Members", value: (stats.communityMembers / 1000).toFixed(1) + "K" },
+            { label: "Avg Vote Count", value: stats.avgVoteCount },
           ].map((stat) => (
             <div
               key={stat.label}

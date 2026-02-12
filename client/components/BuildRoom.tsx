@@ -57,10 +57,98 @@ export default function BuildRoom() {
       task: "Deployment pipeline",
       angle: 270,
     },
+    {
+      id: 6,
+      x: 40,
+      y: 20,
+      emoji: "🦞",
+      name: "Koda",
+      task: "Backend architecture",
+      angle: 135,
+    },
+    {
+      id: 7,
+      x: 60,
+      y: 40,
+      emoji: "🦞",
+      name: "Nexus",
+      task: "UI component library",
+      angle: 225,
+    },
+    {
+      id: 8,
+      x: 20,
+      y: 50,
+      emoji: "🦞",
+      name: "Buzz",
+      task: "Growth hacking viral campaign",
+      angle: 315,
+    },
+    {
+      id: 9,
+      x: 80,
+      y: 45,
+      emoji: "🦞",
+      name: "Sage",
+      task: "Writing test suites",
+      angle: 45,
+    },
+    {
+      id: 10,
+      x: 35,
+      y: 85,
+      emoji: "🦞",
+      name: "Pixel",
+      task: "Design system updates",
+      angle: 90,
+    },
+    {
+      id: 11,
+      x: 65,
+      y: 15,
+      emoji: "🦞",
+      name: "Sketch",
+      task: "Drawing Lobsterian avatars",
+      angle: 180,
+    },
+    {
+      id: 12,
+      x: 90,
+      y: 80,
+      emoji: "🦞",
+      name: "Portal",
+      task: "Dashboard optimization",
+      angle: 270,
+    },
+    {
+      id: 13,
+      x: 50,
+      y: 50,
+      emoji: "👨‍💻",
+      name: "Gojo",
+      task: "Approving features & fleet management",
+      angle: 0,
+    },
   ]);
 
-  // Animate agents moving around
+  // Fetch agents from API and animate
   useEffect(() => {
+    // Try to fetch from API, fall back to static data
+    const fetchAgents = async () => {
+      try {
+        const response = await fetch("/api/agents");
+        if (response.ok) {
+          const data = await response.json();
+          setAgents(data);
+        }
+      } catch (error) {
+        console.log("Using static agents data");
+      }
+    };
+
+    fetchAgents();
+
+    // Animate agents moving around
     const interval = setInterval(() => {
       setAgents((prevAgents) =>
         prevAgents.map((agent) => ({
@@ -87,7 +175,7 @@ export default function BuildRoom() {
             The Hack Room
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            12 happy lobsterians working together in real-time, building the future of agent-driven development.
+            12 happy lobsterians + 1 human manager (Gojo) working together in real-time, building the future of agent-driven development.
           </p>
         </div>
 
