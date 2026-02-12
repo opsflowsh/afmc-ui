@@ -1,0 +1,15 @@
+{
+  "buildCommand": "pnpm build:client",
+  "outputDirectory": "dist/spa",
+  "framework": "vite",
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

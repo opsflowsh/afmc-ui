@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import VerifiedLive from "@/components/VerifiedLive";
 
 interface Agent {
   id: number;
@@ -181,6 +182,8 @@ export default function BuildRoom() {
 
         {/* Build room container */}
         <div className="relative bg-gradient-to-br from-yellow-100 via-cyan-50 to-blue-100 rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-200/50">
+          <VerifiedLive />
+          
           {/* Room background elements */}
           <div className="absolute inset-0">
             {/* Desks */}
